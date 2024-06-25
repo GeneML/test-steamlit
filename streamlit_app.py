@@ -11,43 +11,62 @@ st.title("Lens.org Patent Search API Visualizer")
 # Form to capture user input for the API request
 with st.form(key='search_form'):
     api_token = st.text_input("API Token", type="password")
-    query = st.text_input("Query", value="(solar OR photovoltaic) AND silicon NOT (amorphous OR a-Si)")
+    
+    # Query parameters
+    title = st.text_input("Title")
+    abstract = st.text_input("Abstract")
+    claim = st.text_input("Claim")
+    description = st.text_input("Description")
+    
+    # Other parameters
+    size = st.number_input("Number of Results", min_value=1, max_value=100, value=10)
+    sort_options = ["created", "year_published"]
+    sort_by = st.selectbox("Sort By", sort_options)
+    sort_order = st.selectbox("Sort Order", ["asc", "desc"])
+    include_fields = st.multiselect("Include Fields", [
+        "biblio.invention_title",
+        "legal_status",
+        "biblio.priority_claims"
+    ])
+    
     submit_button = st.form_submit_button(label='Search')
 
 # When the form is submitted
 if submit_button:
     # Construct the query payload
-    payload = {
+    query = {
         "query": {
-            "match": {
-                "title": query,
-                "abstract": query,
-                "claim": query,
-                "description": query
+            "bool": {
+                "must": []
             }
         },
-        "size": 10,
+        "size": size,
         "from": 0,
-        "include": [
-            "biblio.invention_title",
-            "legal_status",
-            "biblio.priority_claims"
-        ],
+        "include": include_fields,
         "sort": [
-            {"created": "desc"},
-            {"year_published": "asc"}
+            {sort_by: sort_order}
         ],
         "exclude": None,
         "scroll": None,
         "scroll_id": None
     }
 
+    # Add query parts if they are provided
+    if title:
+        query["query"]["bool"]["must"].append({"match": {"title": title}})
+    if abstract:
+        query["query"]["bool"]["must"].append({"match": {"abstract": abstract}})
+    if claim:
+        query["query"]["bool"]["must"].append({"match": {"claim": claim}})
+    if description:
+        query["query"]["bool"]["must"].append({"match": {"description": description}})
+
     # Make the API request
     headers = {
         'Authorization': f'Bearer {api_token}',
         'Content-Type': 'application/json'
     }
-    response = requests.post(api_url, headers=headers, json=payload)
+    response = requests.post(api_url, headers=headers, json=query)
 
     # Display the response status
     st.write(f"Response Status: {response.status_code}")
