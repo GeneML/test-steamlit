@@ -45,5 +45,9 @@ if submit_button:
             st.write("Publication Date:", result.get('publication_date', 'N/A'))
             st.write("Jurisdiction:", result.get('jurisdiction', 'N/A'))
             st.write("---")
+          # Button to download results
+        json_data = json.dumps(data, indent=4)
+        st.download_button(label='Download Results as JSON', data=json_data, file_name='results.json', mime='application/json')
     else:
         st.write("Error:", response.json())
+    
