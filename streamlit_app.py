@@ -9,7 +9,7 @@ api_url = "https://api.lens.org/patent/search"
 st.title("Lens.org Patent Search API Visualizer")
 
 # Secret value
-secret = os.environ("API_TOKEN_LENS_ORG")
+secret = os.getenv("API_TOKEN_LENS_ORG")
 
 # Form to capture user input for the API request
 with st.form(key='search_form'):
