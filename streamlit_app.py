@@ -1,5 +1,6 @@
 import streamlit as st
 import requests
+import os 
 
 # Define the API endpoint
 api_url = "https://api.lens.org/patent/search"
