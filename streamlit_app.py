@@ -14,7 +14,7 @@ with st.form(key='search_form'):
     submit_button = st.form_submit_button(label='Search')
 
 # Secret value
-secret = API
+secret = os.getenv("API_TOKEN_LENS_ORG")
 
 # Form to capture user input for the API request
 with st.form(key='search_form'):
