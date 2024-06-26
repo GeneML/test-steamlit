@@ -13,6 +13,21 @@ with st.form(key='search_form'):
     query = st.text_input("Query", value="title:((solar OR photovoltaic) AND silicon NOT (amorphous OR a-Si)) OR abstract:((solar OR photovoltaic) AND silicon NOT (amorphous OR a-Si)) OR claim:((solar OR photovoltaic) AND silicon NOT (amorphous OR a-Si)) OR description:((solar OR photovoltaic) AND silicon NOT (amorphous OR a-Si)) AND (class_cpc.symbol:(Y02E10\/5*) OR class_cpc.symbol:(H01L31\/*)) AND jurisdiction:US AND publication_type:GRANTED_PATENT AND year_published:[2021 TO 2022]")
     submit_button = st.form_submit_button(label='Search')
 
+# Secret value
+secret = API
+
+# Form to capture user input for the API request
+with st.form(key='search_form'):
+    use_secret_token = st.checkbox("Use secret API token")
+    if use_secret_token:
+        api_token = secret
+    else:
+        api_token = st.text_input("API Token", type="password")
+    
+    query = st.text_input("Query", value="title:((solar OR photovoltaic) AND silicon NOT (amorphous OR a-Si)) OR abstract:((solar OR photovoltaic) AND silicon NOT (amorphous OR a-Si)) OR claim:((solar OR photovoltaic) AND silicon NOT (amorphous OR a-Si)) OR description:((solar OR photovoltaic) AND silicon NOT (amorphous OR a-Si)) AND (class_cpc.symbol:(Y02E10\/5*) OR class_cpc.symbol:(H01L31\/*)) AND jurisdiction:US AND publication_type:GRANTED_PATENT AND year_published:[2021 TO 2022]")
+    
+    submit_button = st.form_submit_button(label='Search')
+
 # When the form is submitted
 if submit_button:
     # Make the API request
