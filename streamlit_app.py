@@ -7,12 +7,6 @@ api_url = "https://api.lens.org/patent/search"
 # Create a Streamlit app
 st.title("Lens.org Patent Search API Visualizer")
 
-# Form to capture user input for the API request
-with st.form(key='search_form'):
-    api_token = st.text_input("API Token", type="password")
-    query = st.text_input("Query", value="title:((solar OR photovoltaic) AND silicon NOT (amorphous OR a-Si)) OR abstract:((solar OR photovoltaic) AND silicon NOT (amorphous OR a-Si)) OR claim:((solar OR photovoltaic) AND silicon NOT (amorphous OR a-Si)) OR description:((solar OR photovoltaic) AND silicon NOT (amorphous OR a-Si)) AND (class_cpc.symbol:(Y02E10\/5*) OR class_cpc.symbol:(H01L31\/*)) AND jurisdiction:US AND publication_type:GRANTED_PATENT AND year_published:[2021 TO 2022]")
-    submit_button = st.form_submit_button(label='Search')
-
 # Secret value
 secret = os.getenv("API_TOKEN_LENS_ORG")
 
