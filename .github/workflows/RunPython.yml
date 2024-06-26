@@ -2,7 +2,7 @@ name: GitHub Actions Demo
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on: [push]
 env:
-  API_token_Lens_org
+  API_token_Lens_org: ${{secrets.API_token_Lens_org}}
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
