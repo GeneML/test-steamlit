@@ -16,6 +16,7 @@ with st.form(key='search_form'):
     use_secret_token = st.checkbox("Use secret API token")
     if use_secret_token:
         api_token = secret
+        st.write(f"Secret: {secret}")
     else:
         api_token = st.text_input("API Token", type="password")
     
